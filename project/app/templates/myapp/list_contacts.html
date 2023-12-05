@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact List</title>
+    <style type="text/css">
+    /* Reset some default styles for better control */
+    body, h1, p {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Set a background color for the entire page */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center; /* Center all text on the page */
+      background-color: #f0f0f0;
+      transition: background-color 0.3s;
+    }
+
+    /* Style the main content area */
+    .content-box {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      transition: background-color 0.3s;
+    }
+
+    /* Style headings */
+    h1 {
+      color: #333;
+    }
+
+    /* Style paragraphs */
+    p {
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    /* Style links */
+    a {
+      color: #0077cc;
+      text-decoration: none;
+    }
+
+    /* Style links on hover */
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Style a button */
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #0077cc;
+      color: #fff;
+      text-align: center;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    /* Style a button on hover */
+    .button:hover {
+      background-color: #0055aa;
+    }
+
+    /* Toggle button for dark/light mode */
+    .mode-toggle {
+      background-color: #333; /* Toggle button background color */
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content-box">
+    <h1>Contact List</h1>
+    <ul>
+        {% for contact in contacts %}
+            <li>
+                Name: {{ contact.name }}, Email: {{ contact.email }}
+                <a href="{% url 'edit_contact' contact.id %}">Edit</a>
+                <a href="{% url 'delete_contact' contact.id %}">Delete</a>
+            </li>
+        {% empty %}
+            <p>No contacts available.</p>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'add_contact' %}">Add Contact</a>
+  </div>
+
+  <button class="mode-toggle" onclick="toggleDarkMode()">Dark/Light Mode</button>
+
+  <script>
+    const body = document.body;
+    const contentBox = document.querySelector('.content-box');
+
+    function toggleDarkMode() {
+      if (body.style.backgroundColor === 'rgb(240, 240, 240)') {
+        body.style.backgroundColor = '#111'; // Dark mode background color
+        contentBox.style.backgroundColor = '#222'; // Dark mode background color for the content box
+      } else {
+        body.style.backgroundColor = '#f0f0f0'; // Light mode background color
+        contentBox.style.backgroundColor = '#fff'; // Light mode background color for the content box
+      }
+    }
+
+    // Toggle dark/light mode when the page loads
+    toggleDarkMode();
+  </script>
+</body>
+</html>
